@@ -29,10 +29,18 @@ def build_pipeline():
     print("\n[1/4] Chunking documents...", flush=True)
     docs = load_documents()
     all_chunks = []
+    parent_map = {}
     for doc in docs:
         parents, children = chunk_hierarchical(doc["text"], metadata=doc["metadata"])
+        for p in parents:
+            if p.parent_id:
+                parent_map[p.parent_id] = p.text
         for child in children:
-            all_chunks.append({"text": child.text, "metadata": {**child.metadata, "parent_id": child.parent_id}})
+            p_text = parent_map.get(child.parent_id, child.text)
+            all_chunks.append({
+                "text": child.text,
+                "metadata": {**child.metadata, "parent_id": child.parent_id, "parent_text": p_text}
+            })
     print(f"  ✓ {len(all_chunks)} chunks from {len(docs)} documents ({time.time()-t0:.1f}s)", flush=True)
 
     # Step 2: Enrichment (M5)
@@ -40,7 +48,10 @@ def build_pipeline():
     print(f"\n[2/4] Enriching {len(all_chunks)} chunks (M5, 1 API call/chunk)...", flush=True)
     enriched = enrich_chunks(all_chunks)
     if enriched:
-        all_chunks = [{"text": e.enriched_text, "metadata": e.auto_metadata} for e in enriched]
+        all_chunks = [
+            {"text": e.enriched_text, "metadata": e.auto_metadata}
+            for e in enriched
+        ]
         print(f"  ✓ Enriched {len(enriched)} chunks ({time.time()-t0:.1f}s)", flush=True)
     else:
         print("  ⚠️  M5 not implemented — using raw chunks", flush=True)
@@ -66,10 +77,16 @@ def run_query(query: str, search: HybridSearch, reranker: CrossEncoderReranker) 
     results = search.search(query)
     docs = [{"text": r.text, "score": r.score, "metadata": r.metadata} for r in results]
     reranked = reranker.rerank(query, docs, top_k=RERANK_TOP_K)
-    contexts = [r.text for r in reranked] if reranked else [r.text for r in results[:3]]
+    contexts = []
+    candidates = reranked if reranked else results[:3]
+    for r in candidates:
+        meta = r.metadata if hasattr(r, "metadata") and isinstance(r.metadata, dict) else {}
+        ctx = meta.get("parent_text", r.text) if meta.get("parent_text") else r.text
+        if ctx not in contexts:
+            contexts.append(ctx)
 
     from config import OPENAI_API_KEY
-    if OPENAI_API_KEY and contexts:
+    if OPENAI_API_KEY and not OPENAI_API_KEY.strip().startswith("sk-...") and len(OPENAI_API_KEY.strip()) > 15 and contexts:
         try:
             from openai import OpenAI
             client = OpenAI()

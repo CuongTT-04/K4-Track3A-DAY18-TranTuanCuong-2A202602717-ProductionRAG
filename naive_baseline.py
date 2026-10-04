@@ -40,7 +40,7 @@ def main():
 
     from config import OPENAI_API_KEY
     llm_client = None
-    if OPENAI_API_KEY:
+    if OPENAI_API_KEY and not OPENAI_API_KEY.strip().startswith("sk-...") and len(OPENAI_API_KEY.strip()) > 15:
         from openai import OpenAI
         llm_client = OpenAI()
 

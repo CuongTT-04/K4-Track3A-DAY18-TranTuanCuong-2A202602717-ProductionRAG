@@ -1,0 +1,91 @@
+{
+  "aggregate": {
+    "faithfulness": 0.9013,
+    "answer_relevancy": 0.912,
+    "context_precision": 0.865,
+    "context_recall": 0.8502
+  },
+  "num_questions": 20,
+  "failures": [
+    {
+      "question": "Nhân viên tạm ứng 15 triệu, sau 20 ngày mới thanh toán. Bị phạt bao nhiêu?",
+      "worst_metric": "context_recall",
+      "score": 0.5053,
+      "avg_score": 0.656325,
+      "diagnosis": "Hệ thống tìm kiếm bỏ sót đoạn văn đúng",
+      "suggested_fix": "Cải thiện lại bước cắt đoạn hoặc bổ sung từ khóa BM25"
+    },
+    {
+      "question": "Nếu cần mua một chiếc laptop 30 triệu cho nhân viên mới, ai phê duyệt và cần gì từ phòng CNTT?",
+      "worst_metric": "context_recall",
+      "score": 0.6154,
+      "avg_score": 0.6838500000000001,
+      "diagnosis": "Hệ thống tìm kiếm bỏ sót đoạn văn đúng",
+      "suggested_fix": "Cải thiện lại bước cắt đoạn hoặc bổ sung từ khóa BM25"
+    },
+    {
+      "question": "Nhân viên được tài trợ khóa học 25 triệu, nghỉ việc sau 8 tháng hoàn thành khóa học. Phải hoàn trả bao nhiêu?",
+      "worst_metric": "context_precision",
+      "score": 0.65,
+      "avg_score": 0.7000000000000001,
+      "diagnosis": "Đoạn văn không liên quan bị xếp lên đầu",
+      "suggested_fix": "Bổ sung tầng Cross-Encoder reranking hoặc lọc theo metadata"
+    },
+    {
+      "question": "Muốn mua thiết bị trị giá 55 triệu cần ai phê duyệt?",
+      "worst_metric": "context_precision",
+      "score": 0.65,
+      "avg_score": 0.7000000000000001,
+      "diagnosis": "Đoạn văn không liên quan bị xếp lên đầu",
+      "suggested_fix": "Bổ sung tầng Cross-Encoder reranking hoặc lọc theo metadata"
+    },
+    {
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "worst_metric": "context_recall",
+      "score": 0.48,
+      "avg_score": 0.725,
+      "diagnosis": "Hệ thống tìm kiếm bỏ sót đoạn văn đúng",
+      "suggested_fix": "Cải thiện lại bước cắt đoạn hoặc bổ sung từ khóa BM25"
+    },
+    {
+      "question": "Thâm niên bao nhiêu năm thì được cộng thêm ngày phép?",
+      "worst_metric": "context_precision",
+      "score": 0.5,
+      "avg_score": 0.8140000000000001,
+      "diagnosis": "Đoạn văn không liên quan bị xếp lên đầu",
+      "suggested_fix": "Bổ sung tầng Cross-Encoder reranking hoặc lọc theo metadata"
+    },
+    {
+      "question": "Thông tin lương thuộc cấp độ phân loại dữ liệu nào?",
+      "worst_metric": "context_precision",
+      "score": 0.5,
+      "avg_score": 0.8613249999999999,
+      "diagnosis": "Đoạn văn không liên quan bị xếp lên đầu",
+      "suggested_fix": "Bổ sung tầng Cross-Encoder reranking hoặc lọc theo metadata"
+    },
+    {
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "worst_metric": "context_recall",
+      "score": 0.8421,
+      "avg_score": 0.90685,
+      "diagnosis": "Hệ thống tìm kiếm bỏ sót đoạn văn đúng",
+      "suggested_fix": "Cải thiện lại bước cắt đoạn hoặc bổ sung từ khóa BM25"
+    },
+    {
+      "question": "Lương thử việc của nhân viên Junior mức cao nhất là bao nhiêu?",
+      "worst_metric": "context_recall",
+      "score": 0.8636,
+      "avg_score": 0.92635,
+      "diagnosis": "Hệ thống tìm kiếm bỏ sót đoạn văn đúng",
+      "suggested_fix": "Cải thiện lại bước cắt đoạn hoặc bổ sung từ khóa BM25"
+    },
+    {
+      "question": "Nhân viên thử việc có được nghỉ phép năm không?",
+      "worst_metric": "context_recall",
+      "score": 0.9062,
+      "avg_score": 0.949975,
+      "diagnosis": "Hệ thống tìm kiếm bỏ sót đoạn văn đúng",
+      "suggested_fix": "Cải thiện lại bước cắt đoạn hoặc bổ sung từ khóa BM25"
+    }
+  ]
+}
